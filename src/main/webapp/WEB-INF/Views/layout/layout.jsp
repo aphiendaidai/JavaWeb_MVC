@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,28 +41,40 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/">Quản lý trường học</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/home">Quản lý trường học</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/truong">Trường học</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/giangvien">Giảng viên</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/sinhvien">Sinh viên</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/khoahoc">Khóa học</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/dangky">Đăng ký</a>
-                    </li>
+                    <sec:authorize access="hasRole('ADMIN')">
+               
+                 
+                    </sec:authorize>
+                    
+                    <sec:authorize access="hasAnyRole('USER', 'ADMIN')">
+                             <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/truong">Trường học</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/giangvien">Giảng viên</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/khoahoc">Khóa học</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/sinhvien">Sinh viên</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/dangky">Đăng ký</a>
+                        </li>
+                    </sec:authorize>
                 </ul>
+                <div class="navbar-nav">
+                    <form action="${pageContext.request.contextPath}/logout" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-link nav-link">Đăng xuất</button>
+                    </form>
+                </div>
                 <form class="d-flex ms-auto" action="${pageContext.request.contextPath}/search" method="GET">
                     <div class="input-group">
                         <input type="text" class="form-control" name="keyword" placeholder="Tìm kiếm..." required>

@@ -14,6 +14,8 @@ public class SinhVienService {
     @Autowired
     private SinhVienRepository sinhVienRepository;
     
+    
+    
     public List<SinhVien> getAllSinhVien() {
         return sinhVienRepository.findAll();
     }
@@ -23,6 +25,7 @@ public class SinhVienService {
     }
     
     public SinhVien saveSinhVien(SinhVien sinhVien) {
+    	
         return sinhVienRepository.save(sinhVien);
     }
     

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -34,16 +35,35 @@
                                 <td><c:out value="${sv.diaChi}"/></td>
                                 <td><c:out value="${sv.soDT}"/></td>
                                 <td><c:out value="${sv.truong != null ? sv.truong.tenTruong : 'Không có tên trường'}"/></td>
+                              
                                 <td class="text-center">
-                                    <a href="${pageContext.request.contextPath}/sinhvien/edit/${sv.maSV}" 
-                                       class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit me-1"></i>Sửa
-                                    </a>
-                                    <a href="${pageContext.request.contextPath}/sinhvien/delete/${sv.maSV}" 
-                                       class="btn btn-danger btn-sm"
-                                       onclick="return confirm('Bạn có chắc muốn xóa sinh viên này?')">
-                                        <i class="fas fa-trash me-1"></i>Xóa
-                                    </a>
+                                    <sec:authorize access="hasRole('ADMIN')">
+                                        <a href="${pageContext.request.contextPath}/sinhvien/edit/${sv.maSV}" 
+                                           class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit me-1"></i>Sửa
+                                        </a>
+                                        
+                                        <a href="${pageContext.request.contextPath}/sinhvien/delete/${sv.maSV}" 
+                                           class="btn btn-danger btn-sm"
+                                           onclick="return confirm('Bạn có chắc muốn xóa sinh viên này?')">
+                                            <i class="fas fa-trash me-1"></i>Xóa
+                                        </a>
+                                    </sec:authorize>
+                                    
+                                    <sec:authorize access="hasRole('USER')">
+        <c:if test="${not empty sessionScope.user and not empty sv.user and sessionScope.user.id == sv.user.id}">
+                                            <a href="${pageContext.request.contextPath}/sinhvien/edit/${sv.maSV}" 
+                                               class="btn btn-warning btn-sm">
+                                                <i class="fas fa-edit me-1"></i>Sửa
+                                            </a>
+                                            
+                                            <a href="${pageContext.request.contextPath}/sinhvien/delete/${sv.maSV}" 
+                                               class="btn btn-danger btn-sm"
+                                               onclick="return confirm('Bạn có chắc muốn xóa sinh viên này?')">
+                                                <i class="fas fa-trash me-1"></i>Xóa
+                                            </a>
+                                        </c:if>
+                                    </sec:authorize>
                                 </td>
                             </tr>
                         </c:forEach>

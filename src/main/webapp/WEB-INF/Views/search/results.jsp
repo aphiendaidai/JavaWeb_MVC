@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div class="container-fluid">
     <h2 class="mb-4"><i class="fas fa-search me-2"></i>Kết quả tìm kiếm</h2>
@@ -30,12 +31,17 @@
                                     <td><c:out value="${t.tenTruong}"/></td>
                                     <td><c:out value="${t.diaChi}"/></td>
                                     <td><c:out value="${t.sdt}"/></td>
+                                                                       <sec:authorize access="hasRole('ADMIN')">
+                                    
                                     <td class="text-center">
                                         <a href="${pageContext.request.contextPath}/truong/edit/${t.maTruong}" 
                                            class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit me-1"></i>Sửa
                                         </a>
                                     </td>
+                                                                       </sec:authorize>  
+                                    
+                                    
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -72,12 +78,19 @@
                                     <td><c:out value="${gv.chucVu}"/></td>
                                     <td><c:out value="${gv.soDT}"/></td>
                                     <td><c:out value="${gv.truong != null ? gv.truong.tenTruong : 'Không có tên trường'}"/></td>
+                                    
+                                                                       <sec:authorize access="hasRole('ADMIN')">
+                                    
                                     <td class="text-center">
                                         <a href="${pageContext.request.contextPath}/giangvien/edit/${gv.maGV}" 
                                            class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit me-1"></i>Sửa
                                         </a>
                                     </td>
+                                                                      </sec:authorize>  
+                                    
+                                    
+                                    
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -116,12 +129,18 @@
                                     <td><c:out value="${sv.diaChi}"/></td>
                                     <td><c:out value="${sv.soDT}"/></td>
                                     <td><c:out value="${sv.truong != null ? sv.truong.tenTruong : 'Không có tên trường'}"/></td>
+                                   
+                                                                      <sec:authorize access="hasRole('ADMIN')">
+                                   
                                     <td class="text-center">
                                         <a href="${pageContext.request.contextPath}/sinhvien/edit/${sv.maSV}" 
                                            class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit me-1"></i>Sửa
                                         </a>
                                     </td>
+                                                                       </sec:authorize>  
+                                    
+                                    
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -158,12 +177,19 @@
                                     <td><c:out value="${kh.giangVien.hoTen}"/></td>
                                     <td><c:out value="${kh.thoiGian}"/></td>
                                     <td><c:out value="${kh.truong != null ? kh.truong.tenTruong : 'Không có tên trường'}"/></td>
+                                 
+                                                                    <sec:authorize access="hasRole('ADMIN')">
+                                 
                                     <td class="text-center">
                                         <a href="${pageContext.request.contextPath}/khoahoc/edit/${kh.maKH}" 
                                            class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit me-1"></i>Sửa
                                         </a>
                                     </td>
+                                    
+                                                                     </sec:authorize>  
+                                    
+                                    
                                 </tr>
                             </c:forEach>
                         </tbody>

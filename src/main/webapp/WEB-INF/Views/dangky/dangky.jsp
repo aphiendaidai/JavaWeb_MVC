@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2><i class="fas fa-clipboard-list me-2"></i>Danh sách đăng ký khóa học</h2>
@@ -30,6 +32,10 @@
                                 <td>${dk.khoaHoc.tenKH}</td>
                                 <td>${dk.khoaHoc.giangVien.hoTen}</td>
                                 <td>${dk.khoaHoc.truong.tenTruong}</td>
+                                     <sec:authorize access="hasRole('ADMIN')">
+               
+                 
+                                
                                 <td class="text-center">
                                     <a href="${pageContext.request.contextPath}/dangky/edit/${dk.maDK}" class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i> Sửa
@@ -39,6 +45,9 @@
                                         <i class="fas fa-trash"></i> Xóa
                                     </a>
                                 </td>
+                                                    </sec:authorize>
+                                
+                                
                             </tr>
                         </c:forEach>
                     </tbody>

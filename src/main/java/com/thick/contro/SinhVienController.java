@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,17 +18,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.thick.Service.SinhVienService;
 import com.thick.Service.TruongService;
+import com.thick.Service.UserService;
 import com.thick.model.SinhVien;
+import com.thick.model.User;
 
 @Controller
 @RequestMapping("/sinhvien")
 public class SinhVienController {
     private SinhVienService sinhVienService;
     private TruongService truongService;
+    private UserService userService;
     
-    public SinhVienController(SinhVienService sinhVienService, TruongService truongService) {
+    public SinhVienController(SinhVienService sinhVienService, TruongService truongService, UserService userService) {
         this.sinhVienService = sinhVienService;
         this.truongService = truongService;
+        this.userService = userService;
     }
 
     @InitBinder
@@ -56,7 +61,8 @@ public class SinhVienController {
     @PostMapping
     public String saveSinhVien(@ModelAttribute("sinhviens") SinhVien sinhVien, 
                              BindingResult result, 
-                             Model model) {
+                             Model model,
+                             Authentication authentication) {
         if (sinhVien.getMaSV() == null || sinhVien.getMaSV().trim().isEmpty()) {
             result.rejectValue("maSV", "error.maSV", "Mã sinh viên không được để trống");
         }
@@ -79,7 +85,13 @@ public class SinhVienController {
             return "/layout/layout";
         }
         
+        // Lấy thông tin user đang đăng nhập
+        User currentUser = userService.findByUsername(authentication.getName())
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        sinhVien.setUser(currentUser);
+        
         sinhVienService.saveSinhVien(sinhVien);
+        
         return "redirect:/sinhvien";
     }
     

@@ -1,12 +1,13 @@
 package com.thick.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.Date;
 
 @Entity
 @Table(name = "SINHVIEN")
@@ -31,22 +32,31 @@ public class SinhVien {
     
     @Column(name = "SoDT")
     private Long soDT;
+
+    @ManyToOne
+    @JoinColumn(name = "UserId")
+    private User user;
+    
     
     public SinhVien() {
-        super();
-    }
+		super();
+	}
     
-    public SinhVien(String maSV, String hoTen, Date ngaySinh, String diaChi, Truong truong, Long soDT) {
-        super();
-        this.maSV = maSV;
-        this.hoTen = hoTen;
-        this.ngaySinh = ngaySinh;
-        this.diaChi = diaChi;
-        this.truong = truong;
-        this.soDT = soDT;
-    }
-    
-    public String getMaSV() {
+
+	public SinhVien(String maSV, String hoTen, Date ngaySinh, String diaChi, Truong truong, Long soDT, Long userId,
+			User user) {
+		super();
+		this.maSV = maSV;
+		this.hoTen = hoTen;
+		this.ngaySinh = ngaySinh;
+		this.diaChi = diaChi;
+		this.truong = truong;
+		this.soDT = soDT;
+		this.user = user;
+	}
+
+
+	public String getMaSV() {
         return maSV;
     }
     
@@ -93,4 +103,16 @@ public class SinhVien {
     public void setSoDT(Long soDT) {
         this.soDT = soDT;
     }
+    
+
+    
+    public User getUser() {
+        return user;
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
+        
+    }
+    
 } 
