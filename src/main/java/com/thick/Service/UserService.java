@@ -103,20 +103,20 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User login(String username, String password) {
-        Optional<User> userOpt = userRepository.findByUsername(username);
-        if (userOpt.isEmpty()) {
-            throw new RuntimeException("Username not found");
-        }
+//     public User login(String username, String password) {
+//         Optional<User> userOpt = userRepository.findByUsername(username);
+//         if (userOpt.isEmpty()) {
+//             throw new RuntimeException("Username not found");
+//         }
 
-        User user = userOpt.get();
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid password");
-        }
+//         User user = userOpt.get();
+//         if (!passwordEncoder.matches(password, user.getPassword())) {
+//             throw new RuntimeException("Invalid password");
+//         }
 
-        // Tự động đăng nhập sau khi xác thực thành công
-//        autoLogin(username, password);
+//         // Tự động đăng nhập sau khi xác thực thành công
+// //        autoLogin(username, password);
         
-        return user;
-    }
+//         return user;
+//     }
 } 
