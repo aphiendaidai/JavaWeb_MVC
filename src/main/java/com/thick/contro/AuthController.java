@@ -26,19 +26,7 @@ public class AuthController {
         return "register";
     }
     
-    @PostMapping("/login")
-    public String login(@RequestParam("username") String username,
-                         @RequestParam("password")  String password,
-                       RedirectAttributes redirectAttributes) {
-        try {
-            userService.login(username, password);
-            return "redirect:/home";
-            
-        } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-            return "redirect:/login";
-        }
-    }
+
     
     
     @PostMapping("/register")
@@ -52,7 +40,19 @@ public class AuthController {
         }
     }
 }
-
+    // @PostMapping("/login")
+    // public String login(@RequestParam("username") String username,
+    //                      @RequestParam("password")  String password,
+    //                    RedirectAttributes redirectAttributes) {
+    //     try {
+    //         userService.login(username, password);
+    //         return "redirect:/home";
+            
+    //     } catch (RuntimeException e) {
+    //         redirectAttributes.addFlashAttribute("error", e.getMessage());
+    //         return "redirect:/login";
+    //     }
+    // }
 
 //    @PostMapping("/register")
 //    public String registerUser(@RequestParam("username") String username,
